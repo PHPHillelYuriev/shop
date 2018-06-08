@@ -1,0 +1,43 @@
+{% extends 'base/base.html.twig' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/bootstrap4/bootstrap.min.css') }}">
+<link href="{{ asset('plugins/fontawesome-free-5.0.1/css/fontawesome-all.css') }}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/cart_styles.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/cart_responsive.css') }}">
+{% endblock %}
+
+{% block body %}    
+    <!-- Header -->
+    {% block header %} 
+    	{{ parent() }}
+    {% endblock %}
+	
+	<!-- Single Product -->
+	{% block parallax %}    
+        {% include 'order/partial/cart_section.html.twig' %}
+    {% endblock %}
+
+    <!-- Newsletter -->
+    {% block newsletter %}    
+        {{ parent() }}
+    {% endblock %}
+
+    <!-- Footer -->
+    {% block footer %}    
+        {{ parent() }}
+    {% endblock %}
+
+    <!-- Copyright -->
+    {% block copyright %}
+        {{ parent() }}
+    {% endblock %}
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('js/cart_custom.js') }}"></script>
+{% endblock %}

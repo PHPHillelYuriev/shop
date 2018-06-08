@@ -1,0 +1,57 @@
+{% extends 'base/base.html.twig' %}
+
+{% block title %}Single Product{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/bootstrap4/bootstrap.min.css') }}">
+<link href="{{ asset('plugins/fontawesome-free-5.0.1/css/fontawesome-all.css') }}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{{ asset('plugins/OwlCarousel2-2.2.1/owl.carousel.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('plugins/OwlCarousel2-2.2.1/owl.theme.default.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('plugins/OwlCarousel2-2.2.1/animate.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/product_styles.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/product_responsive.css') }}">
+{% endblock %}
+
+{% block body %}    
+    <!-- Header -->
+    {% block header %} 
+    	{{ parent() }}
+    {% endblock %}
+	
+	<!-- Single Product -->
+	{% block parallax %}    
+        {% include 'product/partial/single_product.html.twig' %}
+    {% endblock %}
+
+	<!-- Recently Viewed -->
+    {% block viewed %}
+        {{ parent() }}
+    {% endblock %}
+
+    <!-- Brands -->
+    {% block brands %}
+       {{ parent() }} 
+    {% endblock %}
+
+    <!-- Newsletter -->
+    {% block newsletter %}    
+        {{ parent() }}
+    {% endblock %}
+
+    <!-- Footer -->
+    {% block footer %}    
+        {{ parent() }}
+    {% endblock %}
+
+    <!-- Copyright -->
+    {% block copyright %}
+        {{ parent() }}
+    {% endblock %}
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('js/product_custom.js') }}"></script>
+{% endblock %}

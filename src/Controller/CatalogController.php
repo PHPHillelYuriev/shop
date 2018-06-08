@@ -19,14 +19,6 @@ class CatalogController extends Controller
     }
 
     /**
-     * @Route("/shop", name="shop")
-     */
-    public function shop()
-    {
-        return $this->render('catalog/shop.html.twig');
-    }
-
-    /**
      * @Route("/blog", name="blog")
      */
     public function blog()

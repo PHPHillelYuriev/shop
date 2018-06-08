@@ -106,7 +106,7 @@
                                     <div class="cart_count"><span>10</span></div>
                                 </div>
                                 <div class="cart_content">
-                                    <div class="cart_text"><a href="#">Cart</a></div>
+                                    <div class="cart_text"><a href="{{ path('cart') }}">Cart</a></div>
                                     <div class="cart_price">$85</div>
                                 </div>
                             </div>
@@ -210,10 +210,10 @@
                                     <a href="#">Pages<i class="fas fa-chevron-down"></i></a>
                                     <ul>
                                         <li><a href="{{ path('shop') }}">Shop<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="product.html">Product<i class="fas fa-chevron-down"></i></a></li>
+                                        <li><a href="{{ path('product') }}">Product<i class="fas fa-chevron-down"></i></a></li>
                                         <li><a href="{{ path('blog') }}">Blog<i class="fas fa-chevron-down"></i></a></li>
                                         <li><a href="{{ path('blogSingle') }}">Blog Post<i class="fas fa-chevron-down"></i></a></li>
-                                        <li><a href="">Cart<i class="fas fa-chevron-down"></i></a></li>
+                                        <li><a href="{{ path('cart') }}">Cart<i class="fas fa-chevron-down"></i></a></li>
                                         <li><a href="{{ path('contact') }}">Contact<i class="fas fa-chevron-down"></i></a></li>
                                     </ul>
                                 </li>
