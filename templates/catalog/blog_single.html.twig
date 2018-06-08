@@ -1,6 +1,6 @@
 {% extends 'base/base.html.twig' %}
 
-{% block title %}Blog{% endblock %}
+{% block title %}Blog Post{% endblock %}
 
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/bootstrap4/bootstrap.min.css') }}">
@@ -8,8 +8,8 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/OwlCarousel2-2.2.1/owl.carousel.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/OwlCarousel2-2.2.1/owl.theme.default.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/OwlCarousel2-2.2.1/animate.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('styles/blog_styles.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('styles/blog_responsive.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/blog_single_styles.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/blog_single_responsive.css') }}">
 {% endblock %}
 
 {% block body %} 	
@@ -18,12 +18,17 @@
         {{ parent() }}
     {% endblock %}
 
-	<!-- Parallax -->
-	{% block parallax %}    
-        {% include 'catalog/partial/parallax.html.twig' %}
+	<!-- Home -->
+	{% block parallax_single %}    
+        {% include 'catalog/partial/parallax_single.html.twig' %}
     {% endblock %}
 
-	<!-- Blog -->
+	<!-- Single Blog Post -->
+	{% block single_post %}    
+        {% include 'catalog/partial/single_post.html.twig' %}
+    {% endblock %}
+
+	<!-- Blog Posts -->
 	{% block blog %}    
         {% include 'catalog/partial/blog.html.twig' %}
     {% endblock %}
@@ -48,4 +53,5 @@
 {% block javascripts %}
 {{ parent() }}
 <script src="{{ asset('plugins/parallax-js-master/parallax.min.js') }}"></script>
+<script src="{{ asset('js/blog_single_custom.js') }}"></script>
 {% endblock %}

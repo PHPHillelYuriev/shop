@@ -19,11 +19,27 @@ class CatalogController extends Controller
     }
 
     /**
+     * @Route("/shop", name="shop")
+     */
+    public function shop()
+    {
+        return $this->render('catalog/shop.html.twig');
+    }
+
+    /**
      * @Route("/blog", name="blog")
      */
     public function blog()
     {
         return $this->render('catalog/blog.html.twig');
+    }
+
+    /**
+     * @Route("/blog/blog_single", name="blogSingle")
+     */
+    public function blogSingle()
+    {
+        return $this->render('catalog/blog_single.html.twig');
     }
 
     /**

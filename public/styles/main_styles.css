@@ -998,7 +998,9 @@ select option
 {
 	margin-right: 0px;
 }
-.main_nav_dropdown li a
+.main_nav_dropdown li a,
+.main_nav_dropdown li span
+
 {
 	font-size: 18px;
 	font-weight: 400;
