@@ -19,6 +19,14 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    //return unique product manufacturer
+    public function getUniqueProductManufacturer(): array
+    {
+        $query = $this->getEntityManager()->createQuery("SELECT DISTINCT product.manufacturer FROM App\Entity\Product product");
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */

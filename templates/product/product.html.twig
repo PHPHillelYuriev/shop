@@ -1,6 +1,6 @@
 {% extends 'base/base.html.twig' %}
 
-{% block title %}Single Product{% endblock %}
+{% block title %}{{ product.manufacturer}}_{{product.model }}{% endblock %}
 
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/bootstrap4/bootstrap.min.css') }}">

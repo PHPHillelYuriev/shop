@@ -10,7 +10,7 @@
 
         {% for secondLevelCategory in firstLevelCategory.children %}
             {% if secondLevelCategory.children is empty %}
-            <li><a href="{{ path('showProductsByCategory', {'category': seconLevelCategory.name}) }}">{{ secondLevelCategory.name }}<i class="fas fa-chevron-right"></i></a></li>
+            <li><a href="{{ path('showProductsByCategory', {'category': secondLevelCategory.name}) }}">{{ secondLevelCategory.name }}<i class="fas fa-chevron-right"></i></a></li>
             {% else %}    
             <li class="hassubs">                
                 <a>{{ secondLevelCategory.name }}<i class="fas fa-chevron-right"></i></a>

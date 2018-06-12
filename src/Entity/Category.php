@@ -45,6 +45,11 @@ class Category
         $this->products = new ArrayCollection();
     }
 
+    public function __tostring()
+    {
+        return $this->name;
+    }
+
     public function getId()
     {
         return $this->id;
