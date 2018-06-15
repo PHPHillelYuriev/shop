@@ -9,6 +9,7 @@ use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use App\Service\LastViewProductsManager;
 
 /**
  * @Route("/OneTech")
@@ -26,9 +27,11 @@ class ProductController extends Controller
     /**
      * @Route("/shop/{productManufacture}_{productModel}", name="showOneProduct")
      * @ParamConverter("product", options={"mapping": {"productManufacture" = "manufacturer", "productModel" = "model"}})
-     */
+     */ 
     public function showOneProduct(Product $product)
-    {
-        return $this->render('product/product.html.twig', compact('product'));
+    {   
+        $lastViewProducts = $this->get(LastViewProductsManager::class)->getLastViewProducts($product);
+
+        return $this->render('product/product.html.twig', compact('product', 'lastViewProducts'));
     }
 }

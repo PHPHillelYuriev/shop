@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Product
 {
@@ -41,6 +42,11 @@ class Product
      */
     private $category;
 
+    public function __toString()
+    {
+        return $this->model;
+    }
+
     public function getId()
     {
         return $this->id;
@@ -70,6 +76,14 @@ class Product
         return $this;
     }
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function setManufacturerValue()
+    {
+        $this->manufacturer = ucfirst($manufacturer);
+    }
+
     public function getPrice()
     {
         return $this->price;
@@ -94,6 +108,14 @@ class Product
         return $this;
     }
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDateAddedValue()
+    {
+        $this->date_added = new \DateTime();
+    }
+ 
     public function getCategory(): ?Category
     {
         return $this->category;

@@ -26,7 +26,7 @@
 
 	<!-- Recently Viewed -->
     {% block viewed %}
-        {{ parent() }}
+        {% include 'product/partial/viewed.html.twig' %}
     {% endblock %}
 
     <!-- Brands -->
