@@ -6,18 +6,15 @@ use App\Entity\Product;
 
 class LastViewProductsManager
 {
-    public function getLastViewProducts(Product $product)
-    {
+    public function getLastViewProductsId(Product $product)
+    {   
         if (isset($_SESSION['lastView'])) {
-            $lastViewProducts = array_unique($_SESSION['lastView']);
-        } else {
-            session_start();
-            $lastViewProducts = null;    
-        }
+            $lastViewProductsId = array_unique($_SESSION['lastView']);
+        } 
 
-        $_SESSION['lastView'][] = $product;
+        $_SESSION['lastView'][] = $product->getId();
         
-        return $lastViewProducts;    
+        return $lastViewProductsId ?? null;    
     }
     
 }

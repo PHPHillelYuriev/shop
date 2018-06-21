@@ -19,14 +19,6 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-    //return categories, where parent = null
-    public function getFirstLevelCategories(): array
-    {
-        $query = $this->getEntityManager()->createQuery("SELECT category FROM App\Entity\Category category WHERE category.parent IS NULL");
-
-        return $query->getResult();
-    }
-
 //    /**
 //     * @return Category[] Returns an array of Category objects
 //     */

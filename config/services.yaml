@@ -28,3 +28,9 @@ services:
     # please note that last definitions always *replace* previous ones
     App\Service\LastViewProductsManager:
         public: true
+
+    App\Service\CartManager:
+        public: true
+
+    App\Service\FormManager:
+        public: true

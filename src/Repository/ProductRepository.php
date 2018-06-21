@@ -20,13 +20,39 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     //return unique product manufacturer
-    public function getUniqueProductManufacturer(): array
-    {
-        $query = $this->getEntityManager()->createQuery("SELECT DISTINCT product.manufacturer FROM App\Entity\Product product");
+    public function getUniqueProductManufacturer(int $categoryId)
+    {   
+        // $dql = "SELECT DISTINCT product.manufacturer FROM App\Entity\Product product WHERE product.category = ($categoryId)";
+        // $query = $this->getEntityManager()->createQuery($dql);
 
-        return $query->getResult();
+        // return $query->getResult();
+
+        return $this->createQueryBuilder('product')
+            ->where("product.category = $categoryId")
+            ->groupBy('product.manufacturer')
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
+    //return products from array id
+    public function getProductsFromArrayId(array $arrayId)
+    {
+        // $id = implode(',', $arrayId);
+        // $dql = "SELECT product FROM App\Entity\Product product WHERE product.id IN($id)";
+
+        // $query = $this->getEntityManager()->createQuery($dql);
+
+        // return $query->getResult();
+
+        return $this->createQueryBuilder('product')
+            ->where("product.id IN (:id)")
+            ->setParameter('id', $arrayId)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */

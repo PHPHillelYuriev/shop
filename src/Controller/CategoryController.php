@@ -13,16 +13,17 @@ use Symfony\Component\HttpFoundation\Request;
 class CategoryController extends Controller
 {
     /**
-      * @Route("/OneTech/{category}", name="showProductsByCategory")
+      * @Route("/OneTech/categories/{category}", name="showProductsByCategory")
       * @ParamConverter("category", options={"mapping": {"category" = "name"}})
       */
     public function showProductsByCategory(Request $request, Category $category, ProductRepository $productRepository)
     {   
-        //get unique product manufacturer
-        $productManufacturers = $productRepository->getUniqueProductManufacturer();
+        //get unique product manufacturers
+        $productManufacturers = $productRepository->getUniqueProductManufacturer($category->getId());
 
         $products = $category->getProducts();
 
+        //create pagination
         $pagination = $this->get('knp_paginator')->paginate(
             $products,
             $request->query->getInt('page', 1),
@@ -37,7 +38,6 @@ class CategoryController extends Controller
     {   
         //get categories, where parent = null
         $categories = $categoryRepository->findBy(['parent' => null ]);
-        // $categories = $categoryRepository->getFirstLevelCategories();
 
         return $this->render('category/partial/menu_category.html.twig', compact('categories'));       
     }
