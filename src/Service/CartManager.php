@@ -48,4 +48,11 @@ class CartManager
 
         return $result;
     }
+
+    public function deleteDataFromSession(string $dataName)
+    {   
+        if (isset($_SESSION[$dataName])) {
+            unset($_SESSION[$dataName]);   
+        }
+    }
 }

@@ -1,6 +1,6 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
-{{ form_start(form, {'action': path('addToCart')}) }}
+{{ form_start(form, {'action': path('addProductToCart')}) }}
 {{ form_widget(form) }}
 <div class="product_price">{{ product.price }}$</div>
 <div class="button_container">

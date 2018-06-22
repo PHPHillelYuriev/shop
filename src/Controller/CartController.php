@@ -32,13 +32,26 @@ class CartController extends Controller
     }
 
     /**
-     * @Route("/cart/add_to_cart", name="addToCart")
+     * @Route("/cart/add_to_cart", name="addProductToCart")
      */
-    public function addToCart(Request $request)
+    public function addProductToCart(Request $request)
     {   
         $referrer = $request->headers->get('referer');
 
-        $product = $this->get(CartManager::class)->setProductInfoToSession($request);
+        $this->get(CartManager::class)->setProductInfoToSession($request);
+
+        return $this->redirect($referrer);
+    }
+
+    /**
+     * @Route("/cart/clear_cart", name="claerCart")
+     */
+    public function claerCart(Request $request)
+    {   
+        $referrer = $request->headers->get('referer');
+        $data = 'cart';
+
+        $this->get(CartManager::class)->deleteDataFromSession($data);
 
         return $this->redirect($referrer);
     }
