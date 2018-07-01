@@ -1254,6 +1254,10 @@ select option
 	float: left;
 	padding-top: 18px;
 }
+.cart_item_info .cart_buttons
+{
+	margin-top: 40px;
+}
 .cart_item_name
 {
 	margin-left: 3%;

@@ -3,56 +3,84 @@
 namespace App\Service;
 
 use App\Entity\Product;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use App\Repository\ProductRepository;
 
 class CartManager
 {
-    public function setProductInfoToSession(Request $request)
+    const SESSION_CART_ID = 'cart';
+
+    private $session;
+    private $repository;
+
+    public function __construct(SessionInterface $session, ProductRepository $repository)
     {
-        $form = $request->request->get('form');
-        $productId = $form['productId'];
-        $quantity = $form['quantity'];
-
-        $productInfo = [
-            'productId' => $productId,
-            'quantity' => $quantity,
-        ]; 
-        
-        $_SESSION['cart'][] = $productInfo;
-
-        return true;
+        $this->session = $session;
+        $this->repository = $repository;
     }
 
-    public function getProductInfoFromSession($info)
+    public function addToCart(Product $product, int $quantity)
     {
-        if (isset($_SESSION['cart'])) {
-            $count = count($_SESSION['cart']);
-            for ($i = 0; $i < $count; $i++) { 
-                $result[] = $_SESSION['cart'][$i]["$info"];
-            }
-            return $result;   
+        if ($this->session->has(self::SESSION_CART_ID) && isset($this->session->get(self::SESSION_CART_ID)[$product->getId()])) {
+            $this->session->set(self::SESSION_CART_ID,
+                [$product->getId() => $this->session->get(self::SESSION_CART_ID)[$product->getId()] += $quantity]
+            );
+
+            return;
         }
 
-        return false;
+        $this->session->set(self::SESSION_CART_ID,
+            [$product->getId() => $this->session->get(self::SESSION_CART_ID)[$product->getId()] = $quantity]
+        );
+
     }
 
-    public function getResultProductsInfo(array $productsInCart, array $productsQuantity): array
-    {   
-        $count = count($productsQuantity);
-        for ($i = 0; $i < $count; $i++) { 
-            $result[] = [
-                'product' => $productsInCart[$i],
-                'quantity' => $productsQuantity[$i],
-            ]; ;
+    public function getCart() :array
+    {
+        $res = [];
+
+        if (!($this->session->has(self::SESSION_CART_ID)) || empty($this->session->get(self::SESSION_CART_ID))) {
+            return [];
         }
 
-        return $result;
-    }
+        foreach ($this->session->get(self::SESSION_CART_ID) as $productId => $quantity) {
+            $position['quantity'] = $quantity;
+            $position['product'] = $this->repository->find($productId);
+            $res[] = $position;
+        }
 
-    public function deleteDataFromSession(string $dataName)
+        return $res;
+    }
+//    public function getProductInfoFromSession($info)
+//    {
+//        if (isset($_SESSION['cart'])) {S
+//            $count = count($_SESSION['cart']);
+//            for ($i = 0; $i < $count; $i++) {
+//                $result[] = $_SESSION['cart'][$i]["$info"];
+//            }
+//            return $result;
+//        }
+//
+//        return false;
+//    }
+
+//    public function getResultProductsInfo(array $productsInCart, array $productsQuantity): array
+//    {
+//        $count = count($productsQuantity);
+//        for ($i = 0; $i < $count; $i++) {
+//            $result[] = [
+//                'product' => $productsInCart[$i],
+//                'quantity' => $productsQuantity[$i],
+//            ];
+//        }
+//
+//        return $result;
+//    }
+
+    public function clearCart()
     {   
-        if (isset($_SESSION[$dataName])) {
-            unset($_SESSION[$dataName]);   
+        if ($this->session->has(self::SESSION_CART_ID)) {
+            $this->session->remove(self::SESSION_CART_ID);
         }
     }
 }

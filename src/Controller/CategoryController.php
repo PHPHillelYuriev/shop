@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Category;
+use App\Entity\Product;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -21,11 +22,11 @@ class CategoryController extends Controller
         //get unique product manufacturers
         $productManufacturers = $productRepository->getUniqueProductManufacturer($category->getId());
 
-        $products = $category->getProducts();
+        $query = $productRepository->getQueryForPagination($category->getId());
 
         //create pagination
         $pagination = $this->get('knp_paginator')->paginate(
-            $products,
+            $query,
             $request->query->getInt('page', 1),
             5
         );

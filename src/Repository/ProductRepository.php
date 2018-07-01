@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Product;
+use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -52,7 +54,16 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
-    
+
+    public function getQueryForPagination(string $data)
+    {
+        return $this->createQueryBuilder('product')
+            ->where("product.category = $data")
+            ->getQuery()
+            ;
+
+    }
+
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */
