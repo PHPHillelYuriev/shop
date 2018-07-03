@@ -24,15 +24,13 @@ class LastViewProductsManager
     public function addLastViewProducts(Product $product)
     {
         if (empty($this->lastView)) {
-            $this->lastView[] = $product->getId();
-            $this->session->set(self::SESSION_LAST_PRODUCT_ID, $this->lastView);
+            $this->addProductIdToSession($product);
 
             return;
         }
 
         if (!(in_array($product->getId(), $this->lastView))){
-            $this->lastView[] = $product->getId();
-            $this->session->set(self::SESSION_LAST_PRODUCT_ID, $this->lastView);
+            $this->addProductIdToSession($product);
         }
     }
 
@@ -47,5 +45,11 @@ class LastViewProductsManager
         }
 
         return $res;
+    }
+
+    private function addProductIdToSession($product)
+    {
+        $this->lastView[] = $product->getId();
+        $this->session->set(self::SESSION_LAST_PRODUCT_ID, $this->lastView);
     }
 }
