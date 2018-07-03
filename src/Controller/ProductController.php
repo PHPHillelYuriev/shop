@@ -10,8 +10,6 @@ use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use App\Service\LastViewProductsManager;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use App\Service\FormManager;
 
 /**
@@ -31,15 +29,10 @@ class ProductController extends Controller
      * @Route("/shop/{productManufacture}_{productModel}", name="showOneProduct")
      * @ParamConverter("product", options={"mapping": {"productManufacture" = "manufacturer", "productModel" = "model"}})
      */ 
-    public function showOneProduct(ProductRepository $productRepository, Product $product)
+    public function showOneProduct(Product $product)
     {          
-        $lastViewProductsId = $this->get(LastViewProductsManager::class)->getLastViewProductsId($product);
-
-        if ($lastViewProductsId !== null) {
-            $lastViewProducts = $productRepository->getProductsFromArrayId($lastViewProductsId);
-        } else {
-            $lastViewProducts = null;
-        }
+        $lastViewProducts = $this->get(LastViewProductsManager::class)->getLastViewProducts();
+        $this->get(LastViewProductsManager::class)->addLastViewProducts($product);
 
         $form = $this->get(FormManager::class)->createCartForm($product);
 

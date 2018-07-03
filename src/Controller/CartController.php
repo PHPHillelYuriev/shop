@@ -19,16 +19,6 @@ class CartController extends Controller
      */
     public function cart(ProductRepository $productRepository)
     {   
-//        $productsId = $this->get(CartManager::class)->getProductInfoFromSession('productId');
-//        $productsQuantity = $this->get(CartManager::class)->getProductInfoFromSession('quantity');
-//
-//        if ($productsId) {
-//            $productsInCart = $productRepository->getProductsFromArrayId($productsId);
-//            $resultProductsInfo = $this->get(CartManager::class)->getResultProductsInfo($productsInCart, $productsQuantity);
-//        } else {
-//            $resultProductsInfo = null;
-//        }
-
         return $this->render('cart/cart.html.twig', ['cart' => $this->get(CartManager::class)->getCart()]);
     }
 
@@ -47,17 +37,17 @@ class CartController extends Controller
         return $this->redirect($referrer);
     }
 
-//    /**
-//     * @Route("/cart/delete-from-cart", name="deleteProductFromCart")
-//     */
-//    public function deleteProductFromCart(Request $request)
-//    {
-//        $referrer = $request->headers->get('referer');
-//
-//        $this->get(CartManager::class)->deleteFromCart();
-//
-//        return $this->redirect($referrer);
-//    }
+    /**
+     * @Route("/cart/delete-from-cart/{product}", name="deleteProductFromCart")
+     */
+    public function deleteProductFromCart(Request $request, Product $product)
+    {
+        $referrer = $request->headers->get('referer');
+
+        $this->get(CartManager::class)->deleteFromCart($product);
+
+        return $this->redirect($referrer);
+    }
 
     /**
      * @Route("/cart/clear-cart", name="claerCart")

@@ -21,18 +21,17 @@ class CartManager
 
     public function addToCart(Product $product, int $quantity)
     {
-        if ($this->session->has(self::SESSION_CART_ID) && isset($this->session->get(self::SESSION_CART_ID)[$product->getId()])) {
-            $this->session->set(self::SESSION_CART_ID,
-                [$product->getId() => $this->session->get(self::SESSION_CART_ID)[$product->getId()] += $quantity]
-            );
+        $cart = $this->session->get(self::SESSION_CART_ID);
+
+        if ($this->session->has(self::SESSION_CART_ID) && isset($cart[$product->getId()])) {
+            $cart[$product->getId()] += $quantity;
+            $this->session->set(self::SESSION_CART_ID, $cart);
 
             return;
         }
 
-        $this->session->set(self::SESSION_CART_ID,
-            [$product->getId() => $this->session->get(self::SESSION_CART_ID)[$product->getId()] = $quantity]
-        );
-
+        $cart[$product->getId()] = $quantity;
+        $this->session->set(self::SESSION_CART_ID, $cart);
     }
 
     public function getCart() :array
@@ -51,31 +50,16 @@ class CartManager
 
         return $res;
     }
-//    public function getProductInfoFromSession($info)
-//    {
-//        if (isset($_SESSION['cart'])) {S
-//            $count = count($_SESSION['cart']);
-//            for ($i = 0; $i < $count; $i++) {
-//                $result[] = $_SESSION['cart'][$i]["$info"];
-//            }
-//            return $result;
-//        }
-//
-//        return false;
-//    }
 
-//    public function getResultProductsInfo(array $productsInCart, array $productsQuantity): array
-//    {
-//        $count = count($productsQuantity);
-//        for ($i = 0; $i < $count; $i++) {
-//            $result[] = [
-//                'product' => $productsInCart[$i],
-//                'quantity' => $productsQuantity[$i],
-//            ];
-//        }
-//
-//        return $result;
-//    }
+    public function deleteFromCart(Product $product)
+    {
+        $cart = $this->session->get(self::SESSION_CART_ID);
+
+        if ($this->session->has(self::SESSION_CART_ID) && isset($cart[$product->getId()])) {
+            unset($cart[$product->getId()]);
+            $this->session->set(self::SESSION_CART_ID, $cart);
+        }
+    }
 
     public function clearCart()
     {   
