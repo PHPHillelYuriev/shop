@@ -34,3 +34,6 @@ services:
 
     App\Service\FormManager:
         public: true
+
+    App\Service\OrderManager:
+        public: true

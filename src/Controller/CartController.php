@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Orders;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Service\CartManager;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\ProductRepository;
 use App\Entity\Product;
+use App\Form\OrdersType;
 
 /**
  * @Route("/OneTech")
@@ -18,8 +20,15 @@ class CartController extends Controller
      * @Route("/cart", name="cart")
      */
     public function cart(ProductRepository $productRepository)
-    {   
-        return $this->render('cart/cart.html.twig', ['cart' => $this->get(CartManager::class)->getCart()]);
+    {
+        $order = new Orders();
+        $cart = $this->get(CartManager::class)->getCart();
+        $orderForm = $this->createForm(OrdersType::class, $order);
+
+        return $this->render('cart/cart.html.twig', [
+            'cart' => $cart,
+            'orderForm' => $orderForm->createView(),
+        ]);
     }
 
     /**
