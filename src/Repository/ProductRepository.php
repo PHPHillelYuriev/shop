@@ -24,17 +24,17 @@ class ProductRepository extends ServiceEntityRepository
     //return unique product manufacturer
     public function getUniqueProductManufacturer(int $categoryId)
     {   
-        // $dql = "SELECT DISTINCT product.manufacturer FROM App\Entity\Product product WHERE product.category = ($categoryId)";
-        // $query = $this->getEntityManager()->createQuery($dql);
+         $dql = "SELECT DISTINCT product.manufacturer FROM App\Entity\Product product WHERE product.category = ($categoryId)";
+         $query = $this->getEntityManager()->createQuery($dql);
 
-        // return $query->getResult();
+         return $query->getResult();
 
-        return $this->createQueryBuilder('product')
-            ->where("product.category = $categoryId")
-            ->groupBy('product.manufacturer')
-            ->getQuery()
-            ->getResult()
-            ;
+//        return $this->createQueryBuilder('product')
+//            ->where("product.category = $categoryId")
+//            ->groupBy('product.manufacturer')
+//            ->getQuery()
+//            ->getResult()
+//            ;
     }
 
     //return products from array id
