@@ -10,9 +10,9 @@ use App\Service\OrderManager;
 class OrderController extends Controller
 {
     /**
-     * @Route("/order", name="order")
+     * @Route("/order", name="addOrder")
      */
-    public function index(Request $request)
+    public function order(Request $request)
     {
         $om = $this->get(OrderManager::class);
         $order = $om->addOrder($request);

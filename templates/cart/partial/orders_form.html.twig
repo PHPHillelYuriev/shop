@@ -1,6 +1,6 @@
 {% form_theme orderForm 'bootstrap_4_layout.html.twig' %}
 
-{{ form_start(orderForm, {'action': path('order')}) }}
+{{ form_start(orderForm) }}
 
     {{ form_row(orderForm.userName) }}
     {{ form_row(orderForm.userSurname) }}

@@ -10,6 +10,8 @@ use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
+use App\Form\CategoryType;
+use App\Service\CategoryCrudManager;
 
 class CategoryController extends Controller
 {
@@ -35,11 +37,74 @@ class CategoryController extends Controller
         return $this->render('category/category.html.twig', compact('pagination', 'productManufacturers'));
     }
 
+    /**
+     * @Route("/admin/categories", name="showCategories")
+     */
+    public function showCategories(CategoryRepository $categoryRepository)
+    {
+        $categories = $categoryRepository->findAll();
+
+        return $this->render('admin/category.html.twig', compact('categories'));
+    }
+
+    /**
+     * @Route("admin/category/add", name="addCategory", methods="GET|POST")
+     */
+    public function addCategory(Request $request)
+    {
+        $ccm = $this->get(CategoryCrudManager::class);
+        $result = $ccm->addCategory($request);
+
+        //if category add to DB
+        if (!$result) {
+            $message = 'You add new category!';
+            $this->addFlash('success', $message);
+
+            return $this->redirectToRoute('showCategories');
+        }
+
+        return $this->render('admin/add.html.twig', $result);
+    }
+
+    /**
+     * @Route("/category/{category}/edit", name="editCategory", methods="GET|POST")
+     */
+    public function editCategory(Request $request, Category $category)
+    {
+        $ccm = $this->get(CategoryCrudManager::class);
+        $result = $ccm->editCategory($request, $category);
+
+        //if category edit
+        if (!$result) {
+            $message = 'You edit category!';
+            $this->addFlash('success', $message);
+
+            return $this->redirectToRoute('showCategories');
+        }
+
+        return $this->render('admin/update.html.twig', $result);
+    }
+
+    /**
+     * @Route("admin/category/{category}/delete", name="deleteCategory")
+     */
+    public function deleteCategory(Request $request, Category $category)
+    {
+        $ccm = $this->get(CategoryCrudManager::class);
+        $result = $ccm->deleteCategory($category);
+
+        if (!$result) {
+            $message = 'You delete a category!';
+            $this->addFlash('success', $message);
+        }
+
+        return $this->redirectToRoute('showCategories');
+    }
+
     public function menuCategory(CategoryRepository $categoryRepository)
-    {   
-        //get categories, where parent = null
+    {
         $categories = $categoryRepository->findBy(['parent' => null ]);
 
-        return $this->render('category/partial/menu_category.html.twig', compact('categories'));       
+        return $this->render('category/partial/menu_category.html.twig', compact('categories'));
     }
 }

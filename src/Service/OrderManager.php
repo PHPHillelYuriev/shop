@@ -1,14 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Texas
- * Date: 05.07.2018
- * Time: 17:34
- */
 
 namespace App\Service;
 
-use App\Entity\Product;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,10 +11,8 @@ use App\Entity\OrderPosition;
 use App\Form\OrdersType;
 use Symfony\Component\HttpFoundation\Request;
 
-class OrderManager
+class OrderManager implements ConstInterface
 {
-    const SESSION_CART_ID = 'cart';
-
     private $session;
     private $productRepository;
     private $formFactory;
@@ -49,7 +40,7 @@ class OrderManager
             $order = $orderForm->getData();
             $this->entityManager->persist($order);
 
-            $cart = $this->session->get(self::SESSION_CART_ID);
+            $cart = $this->session->get(ConstInterface::SESSION_CART_ID);
             foreach ($cart as $productId => $quantity) {
                 $price = $this->productRepository->find($productId)->getPrice();
                 $orderPosition = new OrderPosition($price, $quantity, $productId, $order);

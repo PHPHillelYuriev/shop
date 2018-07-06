@@ -6,10 +6,8 @@ use App\Entity\Product;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Repository\ProductRepository;
 
-class LastViewProductsManager
+class LastViewProductsManager implements ConstInterface
 {
-    const SESSION_LAST_PRODUCT_ID = 'lastView';
-
     private $session;
     private $repository;
     private $lastView;
@@ -18,7 +16,7 @@ class LastViewProductsManager
     {
         $this->session = $session;
         $this->repository = $repository;
-        $this->lastView = $session->get(self::SESSION_LAST_PRODUCT_ID);
+        $this->lastView = $session->get(ConstInterface::SESSION_LAST_PRODUCT_ID);
     }
 
     public function addLastViewProducts(Product $product)
@@ -38,7 +36,7 @@ class LastViewProductsManager
     {
         $res = [];
 
-        if ($this->session->has(self::SESSION_LAST_PRODUCT_ID) && isset($this->lastView)) {
+        if ($this->session->has(ConstInterface::SESSION_LAST_PRODUCT_ID) && isset($this->lastView)) {
             foreach ($this->lastView as $productId) {
                 $res[] = $this->repository->find($productId);
             }
@@ -50,6 +48,6 @@ class LastViewProductsManager
     private function addProductIdToSession($product)
     {
         $this->lastView[] = $product->getId();
-        $this->session->set(self::SESSION_LAST_PRODUCT_ID, $this->lastView);
+        $this->session->set(ConstInterface::SESSION_LAST_PRODUCT_ID, $this->lastView);
     }
 }

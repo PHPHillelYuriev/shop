@@ -1,0 +1,43 @@
+{% extends 'base/admin.html.twig' %}
+
+{% block content %}
+    <div class="content-wrapper">
+    <div class="container-fluid">
+        <div class="card mb-3">
+            <div class="card-header">Список заказов</div>
+            {#<div class="row">#}
+                {#<div class="col-sm-4">#}
+                    {#<a href="#" class="btn btn-success">Добавить продукт</a>#}
+                {#</div>#}
+            {#</div>#}
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <table class="table">
+                            <tr>
+                                <th>Имя покупателя</th>
+                                <th>Фамилия покупателя</th>
+                                <th>Общая цена заказа</th>
+                                <th>Телефон покупателя</th>
+                                <th>Дата заказа</th>
+                            </tr>
+                            {% for order in orders %}
+                                <tr>
+                                    <td>{{ order.username }}</td>
+                                    <td>{{ order.userSurname }}</td>
+                                    <td>${{ order.price }}</td>
+                                    <td>{{ order.phone }}</td>
+                                    <td>{{ order.createdAt|date("d.m.Y G:i:s") }}</td>
+                                    <td><a href="#" class="btn btn-primary">Редактировать</a></td>
+                                    <td><a href="#" class="btn btn-danger">Удалить</a></td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
