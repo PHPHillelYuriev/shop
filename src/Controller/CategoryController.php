@@ -67,7 +67,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * @Route("/category/{category}/edit", name="editCategory", methods="GET|POST")
+     * @Route("admin/category/{category}/edit", name="editCategory", methods="GET|POST")
      */
     public function editCategory(Request $request, Category $category)
     {

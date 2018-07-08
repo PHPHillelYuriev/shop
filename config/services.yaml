@@ -40,3 +40,6 @@ services:
 
     App\Service\CategoryCrudManager:
             public: true
+
+    App\Service\ProductCrudManager:
+                public: true
