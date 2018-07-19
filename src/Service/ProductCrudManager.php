@@ -22,9 +22,9 @@ class ProductCrudManager
 
     public function addProduct(Request $request)
     {
-        $category = new Product();
+        $product = new Product();
 
-        return $this->editProduct($request, $category);
+        return $this->editProduct($request, $product);
     }
 
     public function editProduct(Request $request, Product $product)

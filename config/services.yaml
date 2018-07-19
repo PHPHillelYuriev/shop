@@ -2,6 +2,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    images: '%kernel.project_dir%/public/images'
 
 services:
     # default configuration for services in *this* file
@@ -39,7 +40,28 @@ services:
         public: true
 
     App\Service\CategoryCrudManager:
-            public: true
+        public: true
 
     App\Service\ProductCrudManager:
-                public: true
+        public: true
+
+    admin.category:
+        class: App\Admin\CategoryAdmin
+        arguments: [~, App\Entity\Category, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Category }
+        public: true
+
+    admin.product:
+        class: App\Admin\ProductAdmin
+        arguments: [~, App\Entity\Product, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Product }
+        public: true
+
+    admin.user:
+            class: App\Admin\UserAdmin
+            arguments: [~, App\Entity\User, ~]
+            tags:
+                - { name: sonata.admin, manager_type: orm, label: User }
+            public: true

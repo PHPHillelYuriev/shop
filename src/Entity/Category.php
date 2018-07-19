@@ -12,7 +12,7 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  */
 class Category
 {
-    use ORMBehaviors\Translatable\Translatable;
+//    use ORMBehaviors\Translatable\Translatable;
 
     /**
      * @ORM\Id()
@@ -43,15 +43,20 @@ class Category
 
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
+//        $this->categories = new ArrayCollection();
         $this->children = new ArrayCollection();
         $this->products = new ArrayCollection();
     }
 
-    public function __tostring()
-    {
-        return $this->name;
-    }
+//    public function __call($method, $arguments)
+//    {
+//        return $this->proxyCurrentLocaleTranslation($method, $arguments);
+//    }
+
+//    public function __tostring()
+//    {
+//        return $this->name;
+//    }
 
     public function getId()
     {

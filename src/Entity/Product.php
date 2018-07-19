@@ -59,10 +59,10 @@ class Product
 //        $this->orders = new ArrayCollection();
 //    }
 
-    public function __toString()
-    {
-        return $this->model;
-    }
+//    public function __toString()
+//    {
+//        return $this->model;
+//    }
 
     public function getId()
     {
