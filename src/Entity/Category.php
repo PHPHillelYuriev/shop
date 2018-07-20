@@ -53,11 +53,6 @@ class Category
 //        return $this->proxyCurrentLocaleTranslation($method, $arguments);
 //    }
 
-//    public function __tostring()
-//    {
-//        return $this->name;
-//    }
-
     public function getId()
     {
         return $this->id;

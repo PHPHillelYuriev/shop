@@ -2,6 +2,7 @@
 
 namespace App\Admin;
 
+use App\Entity\Category;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -23,7 +24,14 @@ class CategoryAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('id')
-            ->add('name');
+            ->add('id')
+            ->addIdentifier('name');
+    }
+
+    public function toString($object)
+    {
+        return $object instanceof Category
+            ? $object->getName()
+            : 'Category'; // shown in the breadcrumb on the create view
     }
 }
