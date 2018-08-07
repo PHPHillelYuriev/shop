@@ -17,17 +17,20 @@ class OrderManager implements ConstInterface
     private $productRepository;
     private $formFactory;
     private $entityManager;
+    private $cartManager;
 
     public function __construct(
         SessionInterface $session,
         ProductRepository $productRepository,
         FormFactoryInterface $formFactory,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        CartManager $cartManager
     ) {
         $this->session = $session;
         $this->productRepository = $productRepository;
         $this->formFactory = $formFactory;
         $this->entityManager = $entityManager;
+        $this->cartManager = $cartManager;
     }
 
     public function addOrder(Request $request)
@@ -48,7 +51,11 @@ class OrderManager implements ConstInterface
             }
             $this->entityManager->flush();
 
-            return;
+            $this->cartManager->clearCart();
+            
+            return $order;
         }
+
+        return 'Error !!!';
     }
 }

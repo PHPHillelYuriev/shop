@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Orders;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,12 +19,16 @@ class OrderController extends Controller
         $order = $om->addOrder($request);
 
         //if order add
-        if (!$order) {
+        if ($order instanceof Orders) {
+
             //show flash message
             $message = 'You order was sended!';
             $this->addFlash('success', $message);
 
             return $this->redirectToRoute('cart');
         }
+
+        $this->addFlash('error', $message);
+        return $this->redirectToRoute('cart');
     }
 }

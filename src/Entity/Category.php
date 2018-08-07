@@ -48,6 +48,11 @@ class Category
         $this->products = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->name ? $this->name : 'new';
+    }
+
 //    public function __call($method, $arguments)
 //    {
 //        return $this->proxyCurrentLocaleTranslation($method, $arguments);
